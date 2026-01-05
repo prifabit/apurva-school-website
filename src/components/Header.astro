@@ -66,13 +66,17 @@ const homePath = lang === 'en' ? '/en/' : '/';
   <!-- Mobile Menu -->
   <div 
     id="mobile-menu" 
-    class="hidden lg:hidden border-t bg-[var(--card-bg)] px-4 py-6"
+    class="hidden lg:hidden border-t bg-[var(--card-bg)] px-4 py-6 relative"
   >
+    <div class="flex items-center justify-between mb-8 pb-4 border-b border-[var(--card-border)]">
+      <span class="text-sm font-bold text-[var(--foreground)] opacity-60 uppercase tracking-widest">{lang === 'en' ? 'Language' : 'भाषा'}</span>
+      <LanguageToggle />
+    </div>
     <nav class="flex flex-col gap-3">
       {navItems.map((item) => (
         <a 
           href={lang === 'en' ? `/en/${item.path === 'home' ? '' : item.path}` : `/${item.path === 'home' ? '' : item.path}`} 
-          class="text-base font-semibold text-[var(--foreground)] py-2"
+          class="text-base font-semibold text-[var(--foreground)] py-2 hover:text-[var(--primary)] transition-colors duration-300"
         >
           {t(item.label as any)}
         </a>
