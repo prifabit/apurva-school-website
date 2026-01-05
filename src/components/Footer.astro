@@ -1,0 +1,39 @@
+---
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<footer class="border-t bg-[var(--card-bg)] py-12 mt-12">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+      <div>
+        <h3 class="text-lg font-bold mb-4 text-[var(--primary)] text-pretty">
+          {lang === 'en' ? 'Apurva Residential School for Mentally Challenged' : 'अपूर्वा निवासी मतीमंद विद्यालय'}
+        </h3>
+        <p class="text-sm text-[var(--foreground)] opacity-70 leading-relaxed">
+          {lang === 'en' 
+            ? 'Dedicated to providing structured care and dignified education for children with special needs.' 
+            : 'विशेष गरजा असलेल्या मुलांसाठी संरचित काळजी आणि सन्मानपूर्ण शिक्षण प्रदान करण्यासाठी समर्पित.'}
+        </p>
+      </div>
+      <div>
+        <h3 class="text-sm font-bold uppercase tracking-wider mb-4 text-[var(--foreground)]">
+          {lang === 'en' ? 'Contact' : 'संपर्क'}
+        </h3>
+        <address class="text-sm text-[var(--foreground)] opacity-70 not-italic leading-relaxed">
+          {lang === 'en' ? 'Sengaon, Taluka Sengaon,' : 'सेनगांव, ता. सेनगांव,'}<br />
+          {lang === 'en' ? 'District Hingoli, Maharashtra' : 'जि. हिंगोली, महाराष्ट्र'}
+        </address>
+      </div>
+    </div>
+    <div class="pt-8 border-t flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-[var(--foreground)] opacity-60">
+      <p>&copy; {new Date().getFullYear()} {lang === 'en' ? 'Apurva Residential School for Mentally Challenged' : 'अपूर्वा निवासी मतीमंद विद्यालय'}. {t('footer.rights')}</p>
+      <div class="flex gap-6 items-center">
+        <a href="https://prifabit.com" target="_blank" rel="noopener noreferrer" class="hover:text-[var(--primary)] transition-colors duration-300">Crafted by PriFab IT Solutions</a>
+        <a href="/admin" class="hover:text-[var(--primary)] transition-colors duration-300">{lang === 'en' ? 'Admin' : 'प्रशासन'}</a>
+      </div>
+    </div>
+  </div>
+</footer>

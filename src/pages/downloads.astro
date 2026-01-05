@@ -1,0 +1,50 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import { getCollection } from 'astro:content';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const downloads = await getCollection('downloads');
+---
+
+<Layout title={t('nav.downloads')}>
+	<Header slot="header" />
+	
+	<div class="max-w-4xl mx-auto py-12 px-4">
+		<h1 class="text-4xl font-bold mb-4 text-center text-[var(--foreground)]">{t('nav.downloads')}</h1>
+		<p class="text-center text-[var(--foreground)] opacity-70 mb-12 leading-relaxed">
+			{lang === 'en' ? 'Official documents and forms for download.' : 'अधिकृत कागदपत्रे आणि फॉर्म डाउनलोड करण्यासाठी उपलब्ध आहेत.'}
+		</p>
+		
+		<div class="space-y-4">
+			{downloads.length > 0 ? downloads.map(item => (
+				<a 
+					href={item.data.file} 
+					download 
+					class="card flex items-center justify-between hover:shadow-md group"
+				>
+					<span class="flex items-center gap-4">
+						<div class="w-12 h-12 rounded-xl bg-[var(--primary)] bg-opacity-10 flex items-center justify-center text-[var(--primary)]">
+							<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+						</div>
+						<span class="text-lg font-semibold text-[var(--foreground)]">{lang === 'en' ? item.data.title_en : item.data.title_mr}</span>
+					</span>
+					<span class="text-[var(--primary)] group-hover:translate-y-1 transition-transform duration-300">
+						<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+					</span>
+				</a>
+			)) : (
+				<div class="card py-20 text-center">
+					<p class="text-[var(--foreground)] opacity-60">
+						{lang === 'en' ? 'No documents available for download.' : 'डाउनलोड करण्यासाठी कोणतीही कागदपत्रे उपलब्ध नाहीत.'}
+					</p>
+				</div>
+			)}
+		</div>
+	</div>
+
+	<Footer slot="footer" />
+</Layout>

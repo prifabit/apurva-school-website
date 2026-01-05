@@ -1,0 +1,59 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Layout title={t('nav.contact')}>
+	<Header slot="header" />
+	
+	<div class="max-w-5xl mx-auto py-12 px-4">
+		<h1 class="text-4xl font-bold mb-12 text-center text-[var(--foreground)]">{t('nav.contact')}</h1>
+		
+		<div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+			<div class="space-y-8">
+				<div class="card">
+					<h3 class="text-xl font-bold mb-4 text-[var(--primary)]">{lang === 'en' ? 'Address' : 'पत्ता'}</h3>
+					<address class="text-lg text-[var(--foreground)] opacity-80 not-italic leading-relaxed">
+						{lang === 'en' ? 'Apurva Residential School, Sengaon' : 'अपूर्वा निवासी मतीमंद विद्यालय, सेनगांव'}<br />
+						{lang === 'en' ? 'Tal. Sengaon, Dist. Hingoli, Maharashtra' : 'ता. सेनगांव, जि. हिंगोली, महाराष्ट्र'}
+					</address>
+				</div>
+				<div class="card">
+					<h3 class="text-xl font-bold mb-4 text-[var(--primary)]">{lang === 'en' ? 'Contact Details' : 'संपर्क तपशील'}</h3>
+					<div class="space-y-2 text-lg text-[var(--foreground)] opacity-80">
+						<p>📞 Phone: __________</p>
+						<p>📧 Email: __________</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="card">
+				<h3 class="text-xl font-bold mb-6 text-[var(--foreground)]">{lang === 'en' ? 'Send us a message' : 'आम्हाला संदेश पाठवा'}</h3>
+				<form class="space-y-4">
+					<div>
+						<label class="block text-sm font-semibold mb-2 text-[var(--foreground)]">{lang === 'en' ? 'Full Name' : 'पूर्ण नाव'}</label>
+						<input type="text" class="w-full px-4 py-3 rounded-xl border bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)] transition-all duration-300" />
+					</div>
+					<div>
+						<label class="block text-sm font-semibold mb-2 text-[var(--foreground)]">{lang === 'en' ? 'Email / Phone' : 'ईमेल / फोन'}</label>
+						<input type="text" class="w-full px-4 py-3 rounded-xl border bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)] transition-all duration-300" />
+					</div>
+					<div>
+						<label class="block text-sm font-semibold mb-2 text-[var(--foreground)]">{lang === 'en' ? 'Message' : 'संदेश'}</label>
+						<textarea rows="4" class="w-full px-4 py-3 rounded-xl border bg-[var(--background)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)] transition-all duration-300"></textarea>
+					</div>
+					<button class="btn-primary w-full">
+						{lang === 'en' ? 'Send Message' : 'संदेश पाठवा'}
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<Footer slot="footer" />
+</Layout>

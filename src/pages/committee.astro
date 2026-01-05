@@ -1,0 +1,40 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Layout title={t('nav.committee')}>
+	<Header slot="header" />
+	
+	<div class="max-w-4xl mx-auto py-12 px-4 text-center">
+		<h1 class="text-4xl font-bold mb-8 text-[var(--foreground)]">{t('nav.committee')}</h1>
+		
+		<div class="card max-w-2xl mx-auto mb-12">
+			<p class="text-lg text-[var(--foreground)] opacity-80 leading-relaxed">
+				{lang === 'en' 
+					? 'The Executive Committee is responsible for planning, supervision, and monitoring of administrative and academic activities in accordance with institutional objectives and applicable regulations.' 
+					: 'शाळेच्या प्रशासनिक, शैक्षणिक व विकासात्मक कामकाजाचे नियोजन व देखरेख करण्यासाठी कार्यकारी समिती कार्यरत आहे. समिती शासनाच्या नियमांनुसार व संस्थेच्या उद्दिष्टांनुसार कार्य करते.'}
+			</p>
+		</div>
+
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+			{/* Placeholder members */}
+			{[1, 2, 3].map(() => (
+				<div class="card text-center">
+					<div class="w-20 h-20 mx-auto bg-[var(--primary)] bg-opacity-10 rounded-full mb-4 flex items-center justify-center">
+						<svg class="w-10 h-10 text-[var(--primary)]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+					</div>
+					<h3 class="font-bold text-[var(--foreground)]">Member Name</h3>
+					<p class="text-sm text-[var(--foreground)] opacity-60">Designation</p>
+				</div>
+			))}
+		</div>
+	</div>
+
+	<Footer slot="footer" />
+</Layout>

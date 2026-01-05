@@ -1,0 +1,50 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import { getCollection } from 'astro:content';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const galleryItems = await getCollection('gallery');
+---
+
+<Layout title={t('nav.gallery')}>
+	<Header slot="header" />
+	
+	<div class="max-w-7xl mx-auto py-12 px-4">
+		<h1 class="text-4xl font-bold mb-4 text-center text-[var(--foreground)]">{t('nav.gallery')}</h1>
+		<p class="text-center text-[var(--foreground)] opacity-70 mb-12 max-w-2xl mx-auto leading-relaxed">
+			{lang === 'en' 
+				? 'A glimpse into the daily routines, structured activities, and progress of our students.' 
+				: 'शाळेतील दैनंदिन दिनचर्या, संरचित क्रियाकलाप आणि विद्यार्थ्यांच्या प्रगतीचे काही क्षण.'}
+		</p>
+		
+		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+			{galleryItems.length > 0 ? galleryItems.map(item => (
+				<div class="card group overflow-hidden p-0 hover:shadow-md">
+					<div class="aspect-video bg-[var(--background)] overflow-hidden">
+						<img 
+							src={item.data.image} 
+							alt={lang === 'en' ? item.data.title_en : item.data.title_mr}
+							class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+							loading="lazy"
+						/>
+					</div>
+					<div class="p-4">
+						<p class="text-[var(--foreground)] font-semibold">{lang === 'en' ? item.data.title_en : item.data.title_mr}</p>
+					</div>
+				</div>
+			)) : (
+				<div class="col-span-full py-20 text-center card">
+					<p class="text-[var(--foreground)] opacity-60">
+						{lang === 'en' ? 'No images in gallery yet.' : 'गॅलरीमध्ये अद्याप कोणतीही चित्रे नाहीत.'}
+					</p>
+				</div>
+			)}
+		</div>
+	</div>
+
+	<Footer slot="footer" />
+</Layout>

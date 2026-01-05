@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --primary: #2563EB;
+        --primary-hover: #1D4ED8;
+        --secondary: #4ADE80;
+        --background: #F9FAFB;
+        --foreground: #111827;
+        --card-bg: #FFFFFF;
+        --card-border: #E5E7EB;
+        --border: #E5E7EB;
+    }
+
+    .dark {
+        --primary: #3B82F6;
+        /* blue-500 */
+        --primary-hover: #2563EB;
+        /* blue-600 */
+        --secondary: #22C55E;
+        /* green-500 */
+        --background: #111827;
+        /* gray-900 */
+        --foreground: #F9FAFB;
+        /* gray-50 */
+        --card-bg: #1F2937;
+        /* gray-800 */
+        --card-border: #374151;
+        /* gray-700 */
+        --border: #374151;
+    }
+
+    body {
+        @apply text-[var(--foreground)] min-h-screen antialiased;
+        background-color: var(--background);
+        font-family: 'Inter', sans-serif;
+        line-height: 1.6;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Remove Serif headings, use Inter everywhere */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: 'Inter', sans-serif;
+        letter-spacing: -0.025em;
+        /* Tight tracking for modern feel */
+    }
+
+    /* Respect user's motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+
+        *,
+        *::before,
+        *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+        }
+    }
+}
+
+@layer components {
+    .btn-primary {
+        @apply px-6 py-3 bg-[var(--primary)] hover:bg-[var(--primary-hover)] text-white font-semibold rounded-lg transition-all duration-300 shadow-sm hover:shadow-md;
+    }
+
+    .card {
+        @apply p-8 rounded-2xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition-all duration-300;
+        /* Clean white card, no blur/transparency */
+    }
+
+    .glass {
+        /* Redefined as distinct header style or removed blur */
+        @apply bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800;
+    }
+}

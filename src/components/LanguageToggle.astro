@@ -1,0 +1,42 @@
+---
+import { languages } from '../i18n/ui';
+import { getLangFromUrl } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const currentPath = Astro.url.pathname.replace(`/${lang}`, '') || '/';
+---
+
+<div class="flex items-center bg-[var(--background)] p-1 rounded-xl gap-1 border shadow-sm">
+  {Object.entries(languages).map(([code, label]) => {
+    // If the link is for the default language (mr), remove the /mr prefix or route to pure path
+    // If the link is for 'en', it needs /en/ prefix
+    const isDefault = code === 'mr'; // Assuming 'mr' is now set as defaultLang in config
+    // We need to be careful. currentPath usually starts with /
+    // If we are on /en/about, currentPath (via replace logic) might be /about.
+    // If we want to go to Marathi: just /about
+    // If we want to go to English: /en/about
+    
+    // Correction: line 6 logic: const currentPath = Astro.url.pathname.replace(`/\${lang}`, '') || '/';
+    // If URL is /en/about, lang=en, currentPath = /about.
+    // If URL is /about (Marathi), lang=mr (via getLangFromUrl default), currentPath = /about.
+    
+    // So currentPath is consistent.
+    // Target URL:
+    // If code === 'mr': just currentPath (e.g., /about or /)
+    // If code === 'en': /en + currentPath
+    
+    const href = code === 'mr' ? currentPath : `/${code}${currentPath === '/' ? '' : currentPath}`;
+    
+    return (
+    <a
+      href={href}
+      class={`px-4 py-1.5 rounded-lg text-sm font-bold transition-all duration-300 ${
+        lang === code 
+          ? 'bg-[var(--card-bg)] text-[var(--primary)] shadow-sm' 
+          : 'text-[var(--foreground)] opacity-60 hover:opacity-100'
+      }`}
+    >
+      {code.toUpperCase()}
+    </a>
+  )})}
+</div>

@@ -1,0 +1,47 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const sections = [
+	{ 
+		id: 'about',
+		title_en: 'About the School',
+		title_mr: 'शाळेबद्दल माहिती',
+		content_en: 'Apurva Residential School was established with the objective of providing dedicated, safe, and effective educational facilities for children with special needs. The institution is supported by trained special educators, support staff, and an efficient management committee. Education is imparted with individual attention to support the intellectual, physical, and social development of students.',
+		content_mr: 'अपूर्वा निवासी मतीमंद विद्यालयाची स्थापना विशेष गरजा असलेल्या विद्यार्थ्यांना समर्पित, सुरक्षित व परिणामकारक शैक्षणिक सुविधा उपलब्ध करून देण्याच्या उद्देशाने करण्यात आली आहे. शाळेत प्रशिक्षित विशेष शिक्षक, सहाय्यक कर्मचारी व कार्यक्षम व्यवस्थापन समिती कार्यरत आहे. विद्यार्थ्यांच्या बौद्धिक, शारीरिक व सामाजिक विकासासाठी वैयक्तिक लक्ष देऊन शिक्षण दिले जाते.'
+	},
+	{
+		id: 'vision',
+		title_en: 'Vision & Mission',
+		title_mr: 'दृष्टी आणि ध्येय',
+		content_en: 'Vision: To develop children with special needs into independent, capable, and socially responsible citizens. Mission: To provide quality special education, develop skills based on individual abilities, ensure physical and mental well-being, and maintain a safe, inclusive, and disciplined environment.',
+		content_mr: 'दृष्टी (Vision): विशेष गरजा असलेल्या विद्यार्थ्यांना आत्मनिर्भर, सक्षम व समाजोपयोगी नागरिक म्हणून घडविणे. ध्येय (Mission): गुणवत्तापूर्ण विशेष शिक्षण उपलब्ध करून देणे, विद्यार्थ्यांच्या क्षमतेनुसार कौशल्य विकास करणे, शारीरिक व मानसिक आरोग्याची काळजी घेणे, सुरक्षित, समावेशक व शिस्तबद्ध वातावरण निर्माण करणे.'
+	}
+];
+---
+
+<Layout title={t('nav.about')}>
+	<Header slot="header" />
+	
+	<div class="max-w-4xl mx-auto py-12 px-4">
+		<h1 class="text-4xl font-bold mb-12 text-center text-[var(--foreground)]">{t('nav.about')}</h1>
+		
+		<div class="space-y-8">
+			{sections.map(section => (
+				<div class="card">
+					<h2 class="text-2xl font-bold mb-4 text-[var(--primary)]">{lang === 'en' ? section.title_en : section.title_mr}</h2>
+					<p class="text-lg text-[var(--foreground)] opacity-80 leading-relaxed">
+						{lang === 'en' ? section.content_en : section.content_mr}
+					</p>
+				</div>
+			))}
+		</div>
+	</div>
+
+	<Footer slot="footer" />
+</Layout>

@@ -1,0 +1,47 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const admissionSteps = [
+	{ en: 'Preliminary and medical assessment', mr: 'विद्यार्थ्यांची प्राथमिक व वैद्यकीय तपासणी' },
+	{ en: 'Verification of required documents', mr: 'आवश्यक कागदपत्रांची पडताळणी' },
+	{ en: 'Admission based on eligibility', mr: 'पात्रतेनुसार प्रवेश मंजुरी' },
+	{ en: 'Final approval by committee', mr: 'व्यवस्थापन समितीची अंतिम मान्यता' }
+];
+---
+
+<Layout title={t('nav.admission')}>
+	<Header slot="header" />
+	
+	<div class="max-w-4xl mx-auto py-12 px-4">
+		<h1 class="text-4xl font-bold mb-12 text-center text-[var(--foreground)]">{t('nav.admission')}</h1>
+		
+		<div class="space-y-6">
+			{admissionSteps.map((step, index) => (
+				<div class="card flex items-center gap-6">
+					<span class="flex-shrink-0 w-12 h-12 rounded-xl bg-[var(--primary)] text-white flex items-center justify-center font-bold text-xl">
+						{index + 1}
+					</span>
+					<span class="text-lg text-[var(--foreground)] font-medium">
+						{lang === 'en' ? step.en : step.mr}
+					</span>
+				</div>
+			))}
+		</div>
+
+		<div class="mt-12 card bg-[var(--primary)] bg-opacity-5">
+			<p class="text-[var(--foreground)] opacity-80 text-center leading-relaxed">
+				{lang === 'en' 
+					? 'Note: Admissions are limited and conducted in accordance with institutional capacity and applicable guidelines.' 
+					: 'सूचना: प्रवेश मर्यादित असून शासनाच्या नियमांनुसार व शाळेच्या क्षमतेनुसार दिला जातो.'}
+			</p>
+		</div>
+	</div>
+
+	<Footer slot="footer" />
+</Layout>

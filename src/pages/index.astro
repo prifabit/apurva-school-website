@@ -1,0 +1,135 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import { getEntry } from 'astro:content';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const homeContent = await getEntry('pages', 'home');
+
+const title = lang === 'en' ? homeContent?.data.title_en : homeContent?.data.title_mr;
+const body = lang === 'en' ? homeContent?.data.body_en : homeContent?.data.body_mr;
+---
+
+<Layout title={title || 'Home'}>
+	<Header slot="header" />
+	
+	<!-- Hero Section: Clean, Modern, Trustworthy -->
+	<section class="relative py-24 md:py-32 bg-gradient-to-r from-blue-700 to-blue-900 overflow-hidden">
+		<div class="container relative z-10 mx-auto px-4 max-w-5xl">
+			<div class="flex flex-col items-center text-center space-y-8">
+				<h1 class="text-5xl md:text-6xl font-bold text-white leading-tight max-w-4xl tracking-tight">
+					{lang === 'en' ? 'Apurva Residential School for Mentally Challenged' : 'अपूर्वा निवासी मतीमंद विद्यालय'}
+				</h1>
+				<p class="text-xl md:text-2xl text-blue-50 opacity-90 leading-relaxed max-w-3xl font-light">
+					{body}
+				</p>
+				<div class="flex flex-wrap justify-center gap-6 pt-8">
+					<a href={lang === 'en' ? '/about' : `/${lang}/about`} class="px-8 py-4 bg-white text-blue-700 font-bold rounded-lg shadow-lg hover:bg-blue-50 transition-all duration-300">
+						{t('nav.about')}
+					</a>
+					<a href={lang === 'en' ? '/contact' : `/${lang}/contact`} class="px-8 py-4 bg-transparent border-2 border-white text-white font-semibold rounded-lg hover:bg-white/10 transition-all duration-300">
+						{t('nav.contact')}
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Core Values Section: Icon-based, Structured -->
+	<section class="py-16 md:py-20 bg-[var(--card-bg)]">
+		<div class="container mx-auto px-4 max-w-6xl">
+			<h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-[var(--foreground)]">
+				{lang === 'en' ? 'Our Core Values' : 'आमची मूलभूत मूल्ये'}
+			</h2>
+			
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+				{[
+					{
+						icon: '<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke-width="2"></rect><line x1="16" y1="2" x2="16" y2="6" stroke-width="2"></line><line x1="8" y1="2" x2="8" y2="6" stroke-width="2"></line><line x1="3" y1="10" x2="21" y2="10" stroke-width="2"></line><path d="M8 14h.01" stroke-width="2" stroke-linecap="round"></path><path d="M12 14h.01" stroke-width="2" stroke-linecap="round"></path><path d="M16 14h.01" stroke-width="2" stroke-linecap="round"></path><path d="M8 18h.01" stroke-width="2" stroke-linecap="round"></path><path d="M12 18h.01" stroke-width="2" stroke-linecap="round"></path><path d="M16 18h.01" stroke-width="2" stroke-linecap="round"></path></svg>',
+						title_en: 'Routine & Structure',
+						title_mr: 'नियमितता आणि रचना',
+						desc_en: 'Predictable daily schedules that provide comfort and security.',
+						desc_mr: 'सुरक्षितता आणि आराम देणारे अंदाजे दैनंदिन वेळापत्रक.'
+					},
+					{
+						icon: '<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M12 8v4" stroke-width="2"></path><path d="M12 16h.01" stroke-width="2"></path></svg>',
+						title_en: 'Safety & Care',
+						title_mr: 'सुरक्षा आणि काळजी',
+						desc_en: '24/7 supervision in a secure, nurturing environment.',
+						desc_mr: 'सुरक्षित, पोषक वातावरणात २४/७ देखरेख.'
+					},
+					{
+						icon: '<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>',
+						title_en: 'Skill Development',
+						title_mr: 'कौशल्य विकास',
+						desc_en: 'Individualized learning plans focused on life skills.',
+						desc_mr: 'जीवन कौशल्यांवर केंद्रित वैयक्तिक शिक्षण योजना.'
+					},
+					{
+						icon: '<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>',
+						title_en: 'Emotional Support',
+						title_mr: 'भावनिक आधार',
+						desc_en: 'Trained staff providing compassionate, patient guidance.',
+						desc_mr: 'प्रशिक्षित कर्मचारी दयाळू, धैर्यवान मार्गदर्शन देतात.'
+					}
+				].map(value => (
+					<div class="card hover:shadow-card-hover group relative overflow-hidden text-center bg-white dark:bg-gray-800 p-8 h-full">
+						<div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300 group-hover:bg-teal-200 dark:group-hover:bg-teal-800/40 transition-all duration-300 flex items-center justify-center">
+							<Fragment set:html={value.icon} />
+						</div>
+						<h3 class="text-xl font-bold mb-3 text-[var(--foreground)]">{lang === 'en' ? value.title_en : value.title_mr}</h3>
+						<p class="text-base text-[var(--foreground)] opacity-70 leading-relaxed">{lang === 'en' ? value.desc_en : value.desc_mr}</p>
+					</div>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<!-- Programs Section: Structured Cards -->
+	<section class="py-16 md:py-20 bg-[var(--background)]">
+		<div class="container mx-auto px-4 max-w-6xl">
+			<h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-[var(--foreground)]">
+				{lang === 'en' ? 'Our Programs' : 'आमचे कार्यक्रम'}
+			</h2>
+			
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+				{[
+					{
+						title_en: 'Academic Support',
+						title_mr: 'शैक्षणिक सहाय्य',
+						desc_en: 'Specialized teaching methods adapted to individual learning needs and cognitive abilities.',
+						desc_mr: 'वैयक्तिक शिकण्याच्या गरजा आणि संज्ञानात्मक क्षमतांनुसार विशेष शिक्षण पद्धती.'
+					},
+					{
+						title_en: 'Life Skills Training',
+						title_mr: 'जीवन कौशल्य प्रशिक्षण',
+						desc_en: 'Daily living activities, self-care routines, and practical independence skills.',
+						desc_mr: 'दैनंदिन जीवन क्रियाकलाप, स्वयं-काळजी दिनचर्या आणि व्यावहारिक स्वातंत्र्य कौशल्ये.'
+					},
+					{
+						title_en: 'Behavioral Guidance',
+						title_mr: 'वर्तणूक मार्गदर्शन',
+						desc_en: 'Positive behavioral support and structured interventions in a calm environment.',
+						desc_mr: 'शांत वातावरणात सकारात्मक वर्तणूक समर्थन आणि संरचित हस्तक्षेप.'
+					},
+					{
+						title_en: 'Residential Care',
+						title_mr: 'निवासी काळजी',
+						desc_en: 'Safe, comfortable living spaces with 24/7 trained staff supervision.',
+						desc_mr: 'सुरक्षित, आरामदायक राहण्याची जागा २४/७ प्रशिक्षित कर्मचारी देखरेखीसह.'
+					}
+				].map(program => (
+					<div class="card hover:shadow-card-hover p-8 border border-[var(--card-border)] bg-white dark:bg-gray-800">
+						<h3 class="text-2xl font-bold mb-4 text-[var(--foreground)] border-b border-[var(--border)] pb-3 inline-block">{lang === 'en' ? program.title_en : program.title_mr}</h3>
+						<p class="text-lg text-[var(--foreground)] opacity-80 leading-relaxed">{lang === 'en' ? program.desc_en : program.desc_mr}</p>
+					</div>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<Footer slot="footer" />
+</Layout>
